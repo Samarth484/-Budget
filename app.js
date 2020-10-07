@@ -42,7 +42,20 @@ var UIController = (function() {
 
 var controller = (function(budgetCtrl, UICtrl) {
 
-    DOMstrings = UICtrl.getDOMstrings();
+    var setUpEventListeners = function() {
+
+        DOMstrings = UICtrl.getDOMstrings();
+
+        document.querySelector(DOMstrings.inputBtn).addEventListener("click", ctrlAddItem);
+
+        // The same thing to be checked on the pressing of the ENTER key...
+        document.addEventListener("keypress", function(event) {
+            if (event.keypress === 13 || event.which === 13) {
+                ctrlAddItem();
+            }
+
+        });
+    }
 
     var ctrlAddItem = function() {
         // IMPLEMENTING DRY FOR LINES 40 and 46
@@ -57,19 +70,19 @@ var controller = (function(budgetCtrl, UICtrl) {
         // 5.) Update the Budget on the UI
 
     }
-    document.querySelector(DOMstrings.inputBtn).addEventListener("click", ctrlAddItem);
 
-    // The same thing to be checked on the pressing of the ENTER key...
-    document.addEventListener("keypress", function(event) {
-        if (event.keypress === 13 || event.which === 13) {
-            ctrlAddItem();
+
+    return {
+        init: function() {
+            console.log("Application has started");
+            setUpEventListeners();
         }
+    }
 
-    });
 
 })(budgetController, UIController);
 
-
+controller.init();
 
 
 
